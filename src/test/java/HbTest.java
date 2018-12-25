@@ -45,7 +45,7 @@ public class HbTest {
         clickButtonByID("showcase_button");
         register();
         //  login();
-       // addProductCart();
+        // addProductCart();
         System.out.println("setup tamam");
     }
 
@@ -63,8 +63,8 @@ public class HbTest {
         driver.findElementById("etRegisterRePassword").sendKeys("a159369");
         pressBack();
         clickButtonByID("btnRegisterSend"); //Bilgileri kaydedip hesabı oluşturmak için
-        clickButtonByID("button1");//Hoşgeldiniz sayfasına tıklamak için
-        clickButtonByID("btnUserAccountClose");
+        clickButtonByID("button1");//Hoşgeldiniz yazısını kapatır
+        pressBack();//Anasayfaya dönülür
     }
 
     private void login() {
