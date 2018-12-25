@@ -2,7 +2,6 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -17,11 +16,6 @@ public class HbTest {
     public AppiumDriver<WebElement> driver;
     public WebDriverWait wait;
     public TouchAction touchAction;
-    private WebElement webElement;
-
-    private String splashPermissionYesXpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.support.v7.widget.LinearLayoutCompat/android.widget.ScrollView/android.widget.LinearLayout/android.widget.Button[2]";
-    private String splashAllowPermissionXpath = "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.Button[2]";
-    private String text = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.RelativeLayout/android.widget.TextView";
 
     @BeforeMethod
     public void setupDevice() throws MalformedURLException {
@@ -43,21 +37,22 @@ public class HbTest {
     @Test
     public void testExample() {
         sleepALitle();
-        clickButtonByXpath(splashPermissionYesXpath);
-        clickButtonByXpath(splashAllowPermissionXpath);
+        clickButtonByXpath(ViewPaths.splashPermissionYesXpath);
+        clickButtonByXpath(ViewPaths.splashAllowPermissionXpath);
         clickButtonByID("ivLoginClose");
         clickButtonByID("showcase_button");
         clickButtonByID("showcase_button");
         clickButtonByID("showcase_button");
-        clickButtonByID("iv_toolbar_user_account_menu");
-        clickButtonByID("llUserAccountLogin");
-        //    register();
-        login();
+        register();
+        //  login();
+       // addProductCart();
         System.out.println("setup tamam");
     }
 
     private void register() {
-        clickButtonByID("tvLoginSignup");
+        clickButtonByID("iv_toolbar_user_account_menu"); //Hesabım sayfasını açmak için
+        clickButtonByID("llUserAccountLogin"); //Login sayfasını açmak için
+        clickButtonByID("tvLoginSignup"); //Üye olmak için
         sleepALitle();
         pressBack();
         sleepALitle();
@@ -67,34 +62,30 @@ public class HbTest {
         driver.findElementById("etRegisterPassword").sendKeys("a159369");
         driver.findElementById("etRegisterRePassword").sendKeys("a159369");
         pressBack();
-        clickButtonByID("btnRegisterSend");
-        clickButtonByID("button1");
+        clickButtonByID("btnRegisterSend"); //Bilgileri kaydedip hesabı oluşturmak için
+        clickButtonByID("button1");//Hoşgeldiniz sayfasına tıklamak için
         clickButtonByID("btnUserAccountClose");
     }
 
     private void login() {
+        clickButtonByID("iv_toolbar_user_account_menu");
+        clickButtonByID("llUserAccountLogin");
         sleepALitle();
         driver.findElementById("etLoginEmail").sendKeys("aa1234321a@yandex.com");
         driver.findElementById("etLoginPassword").sendKeys("a159369");
         pressBack();
         clickButtonByID("btnLoginLogin");
         clickButtonByID("button1");
-        scrollScreen();
+        pressBack();
 
-        webElement = driver.findElement(By.className("android.widget.TextView"));
-        String el_text = "Kapat";
-        if (el_text.equals(webElement.getText())) {
-            webElement.click();
-        }
-
-        clickButtonByID("showcase_button");
-        clickButtonByID("showcase_button");
-        clickButtonByID("showcase_button");
     }
 
-    private void scrollScreen() {
-        touchAction.press(120, 1000).waitAction(400).moveTo(120, 600).release();
-        touchAction.perform();
+    private void addProductCart() {
+        //Sepete ürün ekleme kısmı devam etmektedir
+        sleepALitle();
+        scrollScreen();
+        scrollScreen();
+        clickButtonByID("ivHomeGridViewItemImage");
     }
 
     private void pressBack() {
@@ -123,6 +114,11 @@ public class HbTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private void scrollScreen() {
+        touchAction.press(120, 1000).waitAction(400).moveTo(120, 600).release();
+        touchAction.perform();
     }
 
     @AfterMethod
